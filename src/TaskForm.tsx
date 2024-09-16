@@ -8,7 +8,7 @@ export const TaskForm = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let text = e.target[0].value;
+        const text = e.target[0].value;
         if (!text.trim()) return;
 
         startTransition(() => {
