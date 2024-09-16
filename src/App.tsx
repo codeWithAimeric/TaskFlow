@@ -3,9 +3,11 @@ import './App.css'
 
 const App = () => {
   return (
-    <>
-      <h1>Hello world</h1>
-    </>
+    <div className="text-center text-blue-500">
+      <h1 className="text-3xl font-bold underline">
+        Hello, React-Zustand-Tailwind css
+      </h1>
+    </div>
   )
 }
 
