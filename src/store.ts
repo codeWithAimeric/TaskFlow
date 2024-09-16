@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { TaskStore } from './types';
 
-const useTaskStore = create((set) => ({
+const useTaskStore = create<TaskStore>((set) => ({
   tasks: [],
   addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
   removeTask: (id) =>
