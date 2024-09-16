@@ -1,14 +1,14 @@
-import React, { useState, useTransition } from 'react';
+import React, { useTransition } from 'react';
 import { Task } from "./types";
 import useTaskStore from './store';
 
 export const TaskForm = () => {
-    const [text, setText] = useState('');
     const addTask = useTaskStore((state) => state.addTask);
     const [isPending, startTransition] = useTransition();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const text = e.target[0].value;
         if (!text.trim()) return;
 
         startTransition(() => {
@@ -18,7 +18,7 @@ export const TaskForm = () => {
                 completed: false
             };
             addTask(newTask);
-            setText('');
+            e.target.reset();
         });
     }
 
@@ -28,8 +28,6 @@ export const TaskForm = () => {
                 <div className="mb-4">
                     <input
                         type="text"
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
                         placeholder="Ajouter une tâche..."
                         className="w-full border border-gray-300 p-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={isPending}
