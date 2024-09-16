@@ -1,11 +1,19 @@
 import './App.css'
+import { TaskForm } from './TaskForm';
+import { TaskList } from './TaskList';
+import useTaskStore from './store';
 
 
 const App = () => {
+  const tasks = useTaskStore(state => state.tasks);
   return (
-    <>
-      <h1>Hello world</h1>
-    </>
+    <div className="text-center text-blue-500">
+      <h1 className="text-3xl font-bold underline">
+        Task manager
+      </h1>
+      <TaskForm />
+      <TaskList tasks={tasks} />
+    </div>
   )
 }
 
