@@ -1,7 +1,7 @@
 import './App.css'
-import { TaskForm } from './TaskForm';
-import { TaskList } from './TaskList';
-import useTaskStore from './store';
+import { TaskForm } from './components/TaskForm';
+import { TaskList } from './components/TaskList';
+import useTaskStore from './store/store';
 
 
 const App = () => {

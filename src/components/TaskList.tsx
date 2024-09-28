@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useTaskStore from "./store";
+import useTaskStore from "../store/store";
 
 
 export const TaskList = () => {

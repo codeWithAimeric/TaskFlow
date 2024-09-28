@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TaskStore } from './types';
+import { TaskStore } from '../types/types';
 
 const useTaskStore = create<TaskStore>((set) => ({
   tasks: [],

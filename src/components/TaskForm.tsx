@@ -1,6 +1,6 @@
 import React, { useState, useTransition } from 'react';
-import { Task } from "./types";
-import useTaskStore from './store';
+import { Task } from "../types/types";
+import useTaskStore from '../store/store';
 
 export const TaskForm = () => {
     const addTask = useTaskStore((state) => state.addTask);
