@@ -1,23 +1,26 @@
-import React, { useTransition } from 'react';
-import { Task } from "./types";
-import useTaskStore from './store';
+import React, { useState, useTransition } from 'react';
+import { Task } from "../types/types";
+import useTaskStore from '../store/store';
 
 export const TaskForm = () => {
     const addTask = useTaskStore((state) => state.addTask);
     const [isPending, startTransition] = useTransition();
+    const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let text = e.target[0].value;
+        const text = e.target[0].value;
         if (!text.trim()) return;
 
         startTransition(() => {
             const newTask: Task = {
                 id: new Date().toISOString(),
                 text,
-                completed: false
+                completed: false,
+                priority
             };
             addTask(newTask);
+            setPriority('medium');
             e.target.reset();
         });
     }
@@ -32,6 +35,17 @@ export const TaskForm = () => {
                         className="w-full border border-gray-300 p-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={isPending}
                     />
+                </div>
+                <div className="mb-4">
+                    <select
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value as 'high' | 'medium' | 'low')}
+                        className="w-full border border-gray-300 p-2 rounded-md"
+                    >
+                        <option value="high">Haute Priorité</option>
+                        <option value="medium">Priorité Moyenne</option>
+                        <option value="low">Basse Priorité</option>
+                    </select>
                 </div>
                 <div className="flex items-center justify-between">
                     <button
