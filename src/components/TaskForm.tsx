@@ -1,16 +1,21 @@
 import React, { useState, useTransition } from 'react';
 import { Task } from "../types/types";
-import useTaskStore from '../store/store';
+import useTaskStore from '../store/taskStore';
+import useNotificationStore from '../store/notificationStore';
 
 export const TaskForm = () => {
     const addTask = useTaskStore((state) => state.addTask);
     const [isPending, startTransition] = useTransition();
     const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
+    const addNotification = useNotificationStore((state) => state.addNotification);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const text = e.target[0].value;
-        if (!text.trim()) return;
+        if (!text.trim()) {
+            addNotification('Le texte ne peut pas être vide', 'error');
+            return;
+        } 
 
         startTransition(() => {
             const newTask: Task = {
@@ -20,6 +25,7 @@ export const TaskForm = () => {
                 priority
             };
             addTask(newTask);
+            addNotification('Tâche ajoutée avec succès', 'success');
             setPriority('medium');
             e.target.reset();
         });
