@@ -1,5 +1,6 @@
 import { useState } from "react";
-import useTaskStore from "../store/store";
+import useTaskStore from "../store/taskStore";
+import useNotificationStore from "../store/notificationStore";
 
 
 export const TaskList = () => {
@@ -7,6 +8,7 @@ export const TaskList = () => {
     const toggleTask = useTaskStore(state => state.toggleTask);
     const removeTask = useTaskStore((state) => state.removeTask);
     const [filter, setFilter] = useState<'all' | 'high' | 'medium' | 'low'>('all');
+    const addNotification = useNotificationStore((state) => state.addNotification);
 
     const sortedTasks = tasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
@@ -17,10 +19,12 @@ export const TaskList = () => {
 
     const handleToggle = (id: string) => {
         toggleTask(id);
+        addNotification('Tâche mise à jour', 'success');
     };
 
     const handleRemove = (id: string) => {
         removeTask(id);
+        addNotification('Tâche supprimée', 'success');
     };
 
     return (
