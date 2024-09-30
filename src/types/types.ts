@@ -28,3 +28,10 @@ export interface NotificationStore {
   ) => void;
   removeNotification: (id: string) => void;
 }
+
+export interface TaskFormProps {
+  editingTaskId: string | null;
+  initialText: string; 
+  initialPriority: 'high' | 'medium' | 'low';
+  onUpdateComplete: () => void; 
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useTaskStore from "../store/taskStore";
 import useNotificationStore from "../store/notificationStore";
+import { TaskForm } from "./TaskForm";
 
 
 export const TaskList = () => {
@@ -11,6 +12,10 @@ export const TaskList = () => {
     const addNotification = useNotificationStore((state) => state.addNotification);
     const toggleFavorite = useTaskStore((state) => state.toggleFavorite);
     const [showFavorites, setShowFavorites] = useState<boolean>(false);
+    const [isUpdated, setIsUpdated] = useState<boolean>(false);
+    const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+    const [editingTaskText, setEditingTaskText] = useState<string>(''); 
+    const [editingTaskPiority, setEditingTaskPiority] = useState<'high' | 'medium' | 'low'>('medium');     
 
     const sortedTasks = tasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
@@ -34,10 +39,27 @@ export const TaskList = () => {
         addNotification('Tâche ajoutée aux favoris', 'success');
     };
 
+    const handleUpdate = (id: string, text: string, priority: 'high' | 'medium' | 'low') => {
+        setEditingTaskId(id);
+        setEditingTaskText(text);
+        setEditingTaskPiority(priority);
+    }
+
+    const handleUpdateComplete = () => {
+        setEditingTaskId(null);
+        setEditingTaskText('');
+        setEditingTaskPiority('medium');
+    }
+
     const favoriteTasks = showFavorites ? filteredTasks.filter(task => task.isFavorite) : filteredTasks;
 
     return (
         <div>
+            <TaskForm
+                editingTaskId={editingTaskId}
+                initialText={editingTaskText}
+                onUpdateComplete={handleUpdateComplete}
+            />
             {/* Filtre par priorité */}
             <div className="mb-4">
                 <label>Filtrer par priorité :</label>
@@ -90,6 +112,12 @@ export const TaskList = () => {
                                 className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
                             >
                                 Supprimer
+                            </button>
+                            <button
+                                onClick={() => handleUpdate(task.id, task.text)}
+                                className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+                            >
+                                Modifier
                             </button>
                         </div>
                     ))
