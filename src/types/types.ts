@@ -3,6 +3,7 @@ export interface Task {
   text: string;
   completed: boolean;
   priority: "high" | "medium" | "low";
+  isFavorite: boolean;
 }
 
 export interface TaskStore {
@@ -10,6 +11,7 @@ export interface TaskStore {
   addTask: (task: Task) => void;
   removeTask: (id: string) => void;
   toggleTask: (id: string) => void;
+  toggleFavorite: (id: string) => void;
 }
 
 export interface Notification {
