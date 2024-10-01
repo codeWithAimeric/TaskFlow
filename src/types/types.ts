@@ -35,3 +35,9 @@ export interface TaskFormProps {
   initialPriority: 'high' | 'medium' | 'low';
   onUpdateComplete: () => void; 
 }
+
+export interface UserStore {
+  user: unknown | null;
+  setUser: (user: unknown) => void;
+  signOut: () => void;
+}
