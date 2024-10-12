@@ -2,6 +2,7 @@ import { useState } from "react";
 import useTaskStore from "../store/taskStore";
 import useNotificationStore from "../store/notificationStore";
 import { TaskForm } from "./TaskForm";
+import { Button } from "./ui/Button";
 
 
 export const TaskList = () => {
@@ -58,6 +59,7 @@ export const TaskList = () => {
             <TaskForm
                 editingTaskId={editingTaskId}
                 initialText={editingTaskText}
+                initialPriority={editingTaskPiority}
                 onUpdateComplete={handleUpdateComplete}
             />
             {/* Filtre par priorité */}
@@ -99,26 +101,26 @@ export const TaskList = () => {
                             >
                                 {task.text}
                             </span>
-                            <button
+                            <Button
                                 onClick={() => handleFavorite(task.id)}
                                 className={`ml-4 ${task.isFavorite ? 'text-yellow-500' : 'text-gray-400'
                                     }`}
                                 title={task.isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"}
                             >
                                 ★
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                                 onClick={() => handleRemove(task.id)}
                                 className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
                             >
                                 Supprimer
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                                 onClick={() => handleUpdate(task.id, task.text)}
                                 className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
                             >
                                 Modifier
-                            </button>
+                            </Button>
                         </div>
                     ))
                 )}

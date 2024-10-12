@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
+import { Button } from './ui/Button';
+import { Input } from './ui/Input';
 
 export const UserForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -28,30 +30,40 @@ export const UserForm: React.FC = () => {
     };
 
     return (
-        <div>
-            {error && <p className="text-red-500">{error}</p>}
-            {message && <p className="text-green-500">{message}</p>}
+        <div className="flex justify-center items-center h-[80vh]"> 
+            <div className="w-full max-w-md"> 
+                {error && <p className="text-red-500">{error}</p>}
+                {message && <p className="text-green-500">{message}</p>}
 
-            <form onSubmit={handleLogin}>
-                <h2>Connexion</h2>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="border p-2 rounded-md mb-2"
-                />
-                <input
-                    type="password"
-                    placeholder="Mot de passe"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="border p-2 rounded-md mb-2"
-                />
-                <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-                    Se connecter
-                </button>
-            </form>
+                <form onSubmit={handleLogin} className="space-y-4">
+                    <h2 className="text-center text-2xl font-bold mb-4">Connexion</h2> 
+
+                    <Input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email..." 
+                        className="w-full border border-green-500 p-2 rounded-md"
+                    />
+
+                    <Input
+                        type="password"
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Mot de passe..." 
+                        className="w-full border p-2 rounded-md"
+                    />
+
+                    <Button
+                        variant="destructive"
+                        size="lg"
+                        className="w-full" 
+                    >
+                        Se connecter
+                    </Button>
+                </form>
+            </div>
         </div>
+
     );
 };

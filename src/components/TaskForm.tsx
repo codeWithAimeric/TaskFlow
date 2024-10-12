@@ -2,8 +2,10 @@ import React, { useEffect, useState, useTransition } from 'react';
 import { Task, TaskFormProps } from "../types/types";
 import useTaskStore from '../store/taskStore';
 import useNotificationStore from '../store/notificationStore';
+import { Button } from './ui/Button';
+import { Input } from './ui/Input';
 
-export const TaskForm: React.FC<TaskFormProps> = ({editingTaskId, initialText, initialPriority, onUpdateComplete}) => {
+export const TaskForm: React.FC<TaskFormProps> = ({ editingTaskId, initialText, initialPriority, onUpdateComplete }) => {
     const addTask = useTaskStore((state) => state.addTask);
     const [isPending, startTransition] = useTransition();
     const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
@@ -17,15 +19,15 @@ export const TaskForm: React.FC<TaskFormProps> = ({editingTaskId, initialText, i
         if (!text.trim()) {
             addNotification('Le texte ne peut pas être vide', 'error');
             return;
-        } 
+        }
 
         startTransition(() => {
-            if(editingTaskId) {
+            if (editingTaskId) {
                 updateTask(editingTaskId, text);
                 onUpdateComplete();
                 addNotification('Tâche mise à jour', 'success');
                 return;
-            }else{
+            } else {
                 const newTask: Task = {
                     id: new Date().toISOString(),
                     text,
@@ -51,7 +53,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({editingTaskId, initialText, i
         <div className="flex justify-center items-center h-screen">
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md w-full">
                 <div className="mb-4">
-                    <input
+                    <Input
                         type="text"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
@@ -72,13 +74,13 @@ export const TaskForm: React.FC<TaskFormProps> = ({editingTaskId, initialText, i
                     </select>
                 </div>
                 <div className="flex items-center justify-between">
-                    <button
+                    <Button
                         type="submit"
                         className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={isPending}
                     >
                         {isPending ? 'Ajout en cours...' : (editingTaskId ? 'Mettre à jour' : 'Ajouter')}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

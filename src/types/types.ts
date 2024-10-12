@@ -1,3 +1,6 @@
+import { buttonVariants } from "@/components/ui/Button";
+import { VariantProps } from "class-variance-authority";
+
 export interface Task {
   id: string;
   text: string;
@@ -40,4 +43,10 @@ export interface UserStore {
   user: unknown | null;
   setUser: (user: unknown) => void;
   signOut: () => void;
+}
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
 }
