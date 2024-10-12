@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TaskStore } from '../types/types';
+import { TaskStore } from "../types/types";
 
 const useTaskStore = create<TaskStore>((set) => ({
   tasks: [],
@@ -10,6 +10,18 @@ const useTaskStore = create<TaskStore>((set) => ({
     set((state) => ({
       tasks: state.tasks.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
+      ),
+    })),
+  toggleFavorite: (id) =>
+    set((state) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === id ? { ...task, isFavorite: !task.isFavorite } : task
+      ),
+    })),
+  updateTask: (id: string, textTask: string) =>
+    set((state) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === id ? { ...task, text: textTask } : task
       ),
     })),
 }));
