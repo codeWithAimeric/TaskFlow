@@ -4,6 +4,7 @@ import useTaskStore from '../store/taskStore';
 import useNotificationStore from '../store/notificationStore';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 export const TaskForm: React.FC<TaskFormProps> = ({ editingTaskId, initialText, initialPriority, onUpdateComplete }) => {
     const addTask = useTaskStore((state) => state.addTask);
@@ -63,15 +64,16 @@ export const TaskForm: React.FC<TaskFormProps> = ({ editingTaskId, initialText, 
                     />
                 </div>
                 <div className="mb-4">
-                    <select
-                        value={priority}
-                        onChange={(e) => setPriority(e.target.value as 'high' | 'medium' | 'low')}
-                        className="w-full border border-gray-300 p-2 rounded-md"
-                    >
-                        <option value="high">Haute Priorité</option>
-                        <option value="medium">Priorité Moyenne</option>
-                        <option value="low">Basse Priorité</option>
-                    </select>
+                    <Select value={priority} onValueChange={(value) => setPriority(value as 'high' | 'medium' | 'low')}>
+                        <SelectTrigger className="w-full border border-gray-300 p-2 rounded-md">
+                            <SelectValue placeholder="Priorité" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="high">Haute Priorité</SelectItem>
+                            <SelectItem value="medium">Priorité Moyenne</SelectItem>
+                            <SelectItem value="low">Basse Priorité</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
                 <div className="flex items-center justify-between">
                     <Button

@@ -44,9 +44,3 @@ export interface UserStore {
   setUser: (user: unknown) => void;
   signOut: () => void;
 }
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-}

@@ -3,6 +3,7 @@ import useTaskStore from "../store/taskStore";
 import useNotificationStore from "../store/notificationStore";
 import { TaskForm } from "./TaskForm";
 import { Button } from "./ui/Button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 
 export const TaskList = () => {
@@ -15,8 +16,8 @@ export const TaskList = () => {
     const [showFavorites, setShowFavorites] = useState<boolean>(false);
     const [isUpdated, setIsUpdated] = useState<boolean>(false);
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
-    const [editingTaskText, setEditingTaskText] = useState<string>(''); 
-    const [editingTaskPiority, setEditingTaskPiority] = useState<'high' | 'medium' | 'low'>('medium');     
+    const [editingTaskText, setEditingTaskText] = useState<string>('');
+    const [editingTaskPiority, setEditingTaskPiority] = useState<'high' | 'medium' | 'low'>('medium');
 
     const sortedTasks = tasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
@@ -64,23 +65,27 @@ export const TaskList = () => {
             />
             {/* Filtre par priorité */}
             <div className="mb-4">
-                <label>Filtrer par priorité :</label>
-                <select
-                    value={filter}
-                    onChange={(e) => setFilter(e.target.value as 'all' | 'high' | 'medium' | 'low')}
-                    className="ml-2 border border-gray-300 p-2 rounded-md"
-                >
-                    <option value="all">Toutes</option>
-                    <option value="high">Haute Priorité</option>
-                    <option value="medium">Priorité Moyenne</option>
-                    <option value="low">Basse Priorité</option>
-                </select>
-                <button
-                    onClick={() => setShowFavorites(!showFavorites)}
-                    className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-                >
-                    {showFavorites ? "Voir toutes les tâches" : "Voir les favoris"}
-                </button>
+                <div className="flex flex-col justify-center items-center space-y-4">
+
+                    <label className="text-center">Filtrer par priorité :</label>
+                    <Select value={filter} onValueChange={(value) => setFilter(value as 'all' | 'high' | 'medium' | 'low')}>
+                        <SelectTrigger className="w-[180px] ml-2 border border-gray-300 p-2 rounded-md center">
+                            <SelectValue placeholder="Filtrer par priorité" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Toutes</SelectItem>
+                            <SelectItem value="high">Haute Priorité</SelectItem>
+                            <SelectItem value="medium">Priorité Moyenne</SelectItem>
+                            <SelectItem value="low">Basse Priorité</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Button
+                        onClick={() => setShowFavorites(!showFavorites)}
+                        className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md"
+                    >
+                        {showFavorites ? "Voir toutes les tâches" : "Voir les favoris"}
+                    </Button>
+                </div>
             </div>
 
             {/* Affichage des tâches triées et filtrées */}
@@ -116,7 +121,7 @@ export const TaskList = () => {
                                 Supprimer
                             </Button>
                             <Button
-                                onClick={() => handleUpdate(task.id, task.text)}
+                                onClick={() => handleUpdate(task.id, task.text, task.priority)}
                                 className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
                             >
                                 Modifier
